@@ -17,7 +17,7 @@ jobs:
         - name: Copy 'user-agents.json.gz' file
           run: |
             git clone https://github.com/intoli/user-agents.git
-            ls -al user-agents/src
+            ls -al
             cp  user-agents/src/user-agents.json.gz data/user-agents.json.gz
 
         - name: Commit and Push file
