@@ -13,26 +13,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        - name: checkout repo content
+        - name: Checkout repo content
           # https://github.com/marketplace/actions/checkout
           uses: actions/checkout@v4.2.0
 
-        - name: Checkout repo content
+        - name: Checkout intoli/user-agents repo
           # https://github.com/marketplace/actions/checkout
           uses: actions/checkout@v4.2.0
           with:
               repository: intoli/user-agents
               path: target-repo
 
-        - name: Copy file
-          run: |
-            git clone https://github.com/intoli/user-agents.git
+        - name: Copy 'user-agents.json.gz' file
+          run:
             cp  user-agents/src/user-agents.json.gz data/user-agents.json.gz
 
         - name: Commit and Push file
           run: |
-            git config --global user.name "LeMoussel"
-            git config --global user.email "cnhx27@gmail.com"
+            git config user.name github-actions
+            git config user.email github-actions@github.com
             git add data/user-agents.json.gz
             git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
             git push
