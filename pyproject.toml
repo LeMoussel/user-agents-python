@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "user-agents-python"
+version = "0.1.0"
+description = "A Python library to generate random user agents with regularly updated data."
+authors = ["LeMoussel <cnhx27@gmail.com>"]
+license = "2-Clause BSD"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.32.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
