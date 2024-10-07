@@ -25,7 +25,7 @@ jobs:
               path: target-repo
 
         - name: Copy 'user-agents.json.gz' file
-          run:
+          run: |
             ls -al
             cp  user-agents/src/user-agents.json.gz data/user-agents.json.gz
 
