@@ -16,7 +16,7 @@ jobs:
     steps:
         - name: Copy 'user-agents.json.gz' file
           run: |
-            git clone git@github.com:intoli/user-agents.git
+            git clone https://github.com/intoli/user-agents.git
             git clone git@github.com:LeMoussel/user-agents-python.git
             cp  user-agents/src/user-agents.json.gz user-agents-python/data/user-agents.json.gz
 
