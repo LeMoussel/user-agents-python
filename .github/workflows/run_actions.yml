@@ -2,9 +2,12 @@ name: run main.py
 
 on:
   # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
-  schedule:
+  #schedule:
     # https://www.python-engineer.com/posts/run-python-github-actions/#cron-syntax-refresher
-    - cron: '0 14 * * *' # Every day at 14h00 UTC
+    #- cron: '0 14 * * *' # Every day at 14h00 UTC
+
+    push:
+        branches: [ "main" ]
 
 jobs:
   build:
