@@ -31,6 +31,8 @@ jobs:
 
         - name: Commit and Push file
           run: |
+            git config --global user.name "LeMoussel"
+            git config --global user.email "cnhx27@gmail.com"
             git add data/user-agents.json.gz
             git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
             git push
