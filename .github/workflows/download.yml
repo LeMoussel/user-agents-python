@@ -18,14 +18,13 @@ jobs:
           run: |
             git clone https://github.com/intoli/user-agents.git
             git clone https://github.com/LeMoussel/user-agents-python.git
-            ls -al
             cp  user-agents/src/user-agents.json.gz user-agents-python/data/user-agents.json.gz
 
         - name: Commit and Push file
           run: |
-            cd user-agents-python
+            cd user-agents-python/data
             git config --global user.name "github-actions[bot]"
             git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            git add user-agents-python/data/user-agents.json.gz
+            git add .
             git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
             git push
