@@ -17,8 +17,13 @@ jobs:
         - name: Copy 'user-agents.json.gz' file
           run: |
             git clone https://github.com/intoli/user-agents.git
-            git clone https://github.com/LeMoussel/user-agents-python.git
+            cd user-agents
             git remote set-url origin git@github.com:LeMoussel/user-agents-python.git
+            cd ..
+            git clone https://github.com/LeMoussel/user-agents-python.git
+            cd user-agents-python
+            git remote set-url origin git@github.com:LeMoussel/user-agents-python.git
+            cd ..
             cp  user-agents/src/user-agents.json.gz user-agents-python/data/user-agents.json.gz
 
         - name: Commit and Push file
