@@ -1,33 +1,33 @@
-name: Download 'user-agents.json.gz' file from Intoli 'user-agents' repository
+name: run main.py
 
 on:
     # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
     schedule:
         # https://www.python-engineer.com/posts/run-python-github-actions/#cron-syntax-refresher
-        - cron: '0 12 * * *' # Every day at 14h00 UTC
+        - cron: '0 14 * * *' # Every day at 14h00 UTC
 
 jobs:
-    download-file:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout current repository
-                # https://github.com/marketplace/actions/checkout
-                uses: actions/checkout@v4.2.0
+  build:
+    runs-on: ubuntu-latest
+    steps:
+        - name: checkout repo content
+          # https://github.com/marketplace/actions/checkout
+          uses: actions/checkout@v4.2.0
 
-            - name: Checkout repo content
-                # https://github.com/marketplace/actions/checkout
-                uses: actions/checkout@v4.2.0
-                with:
-                    repository: intoli/user-agents
-                    path: target-repo
+        - name: Checkout repo content
+          # https://github.com/marketplace/actions/checkout
+          uses: actions/checkout@v4.2.0
+          with:
+              repository: intoli/user-agents
+              path: target-repo
 
-            - name: Copy file
-                run: cp target-repo/src/user-agents.json.gz data/user-agents.json.gz
+        - name: Copy file
+          run: cp target-repo/src/user-agents.json.gz data/user-agents.json.gz
 
-            - name: Commit and Push file
-                run: |
-                    git config --global user.name "github-actions[bot]"
-                    git config --global user.email "github-actions[bot]@users.noreply.github.com"
-                    git add data/user-agents.json.gz
-                    git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
-                    git push
+        - name: Commit and Push file
+          run: |
+              git config --global user.name "github-actions[bot]"
+              git config --global user.email "github-actions[bot]@users.noreply.github.com"
+              git add data/user-agents.json.gz
+              git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
+              git push
