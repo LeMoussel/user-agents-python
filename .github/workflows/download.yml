@@ -26,8 +26,8 @@ jobs:
 
         - name: Copy 'user-agents.json.gz' file
           run: |
-            ls -al user-agents
-            cp  user-agents/src/user-agents.json.gz data/user-agents.json.gz
+            ls -al user_agents
+            cp  user_agents/src/user-agents.json.gz data/user-agents.json.gz
 
         - name: Commit and Push file
           run: |
