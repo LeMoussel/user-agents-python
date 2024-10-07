@@ -6,33 +6,24 @@ on:
         # https://www.python-engineer.com/posts/run-python-github-actions/#cron-syntax-refresher
         #- cron: '30 13 * * *' # Every day at 13h30 UTC
 
-    push:
+     push:
         branches: [ "main" ]
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-        - name: Checkout repo content
-          # https://github.com/marketplace/actions/checkout
-          uses: actions/checkout@v4.2.0
-
-        - name: Checkout intoli/user-agents repo
-          # https://github.com/marketplace/actions/checkout
-          uses: actions/checkout@v4.2.0
-          with:
-              repository: intoli/user-agents
-              path: target-repo
-
-        - name: Copy 'user-agents.json.gz' file
+        - name: Copy file
           run: |
-            ls -al user_agents
-            cp  user_agents/src/user-agents.json.gz data/user-agents.json.gz
+            git clone https://github.com/intoli/user-agents.git
+            ls -al
+            cp  user-agents/src/user-agents.json.gz data/user-agents.json.gz
 
         - name: Commit and Push file
           run: |
-            git config user.name github-actions
-            git config user.email github-actions@github.com
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
             git add data/user-agents.json.gz
             git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
             git push
