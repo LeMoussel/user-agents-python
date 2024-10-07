@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "user-agents-python"
+name = "user_agents_python"
 version = "0.1.0"
 description = "A Python library to generate random user agents with regularly updated data."
 authors = ["LeMoussel <cnhx27@gmail.com>"]

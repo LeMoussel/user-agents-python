@@ -2,9 +2,12 @@ name: run main.py
 
 on:
     # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
-    schedule:
+    #schedule:
         # https://www.python-engineer.com/posts/run-python-github-actions/#cron-syntax-refresher
-        - cron: '30 13 * * *' # Every day at 13h30 UTC
+        #- cron: '30 13 * * *' # Every day at 13h30 UTC
+
+    push:
+        branches: [ "main" ]
 
 jobs:
   build:
@@ -22,12 +25,14 @@ jobs:
               path: target-repo
 
         - name: Copy file
-          run: cp target-repo/src/user-agents.json.gz data/user-agents.json.gz
+          run: |
+            git clone https://github.com/intoli/user-agents.git
+            cp  user-agents/src/user-agents.json.gz data/user-agents.json.gz
 
         - name: Commit and Push file
           run: |
-              git config --global user.name "github-actions[bot]"
-              git config --global user.email "github-actions[bot]@users.noreply.github.com"
-              git add data/user-agents.json.gz
-              git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
-              git push
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git add data/user-agents.json.gz
+            git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
+            git push
