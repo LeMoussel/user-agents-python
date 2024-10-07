@@ -17,20 +17,14 @@ jobs:
         - name: Copy 'user-agents.json.gz' file
           run: |
             git clone https://github.com/intoli/user-agents.git
-            cd user-agents
-            git remote set-url origin git@github.com:LeMoussel/user-agents-python.git
-            cd ..
             git clone https://github.com/LeMoussel/user-agents-python.git
-            cd user-agents-python
-            git remote set-url origin git@github.com:LeMoussel/user-agents-python.git
-            cd ..
             cp  user-agents/src/user-agents.json.gz user-agents-python/data/user-agents.json.gz
 
         - name: Commit and Push file
           run: |
             cd user-agents-python/data
-            git config --global user.name "github-actions[bot]"
-            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+            git config --global user.name "LeMoussel"
+            git config --global user.email "cnhx27@gmail.com"
             git add .
             git commit -m "Update 'user-agents.json.gz' file from Intoli 'user-agents' repository"
             git push
