@@ -1,0 +1,15 @@
+name: Do things every 5 minutes
+on:
+  # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+  schedule:
+    - cron: "*/5 * * * *"
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.SuperSecret }}
+        run: |
+          echo "$SUPER_SECRET"
+          
