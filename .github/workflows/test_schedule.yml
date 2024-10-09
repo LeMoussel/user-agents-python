@@ -1,11 +1,11 @@
-name: Do things every 5 minutes
+name: Test Schedule
 on:
   push:
   
   # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
   # https://github.com/marketplace/actions/schedule-workflow
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "02 17 * * *"
 jobs:
   schedule:
     name: 📅 Schedule
@@ -19,7 +19,7 @@ jobs:
           timezoneWindows: "Europe/Paris"    
       - name: Get current date
         id: date
-        run: echo "date=$(date date +'%d/%m/%y %H:%M:%S')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%d/%m/%y %H:%M:%S')" >> $GITHUB_OUTPUT
       - name: Test with environment variables
         env:
           EXEC_DATE: ${{ steps.date.outputs.date }}
