@@ -1,5 +1,7 @@
 name: Do things every 5 minutes
 on:
+  push:
+  
   # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
   # https://github.com/marketplace/actions/schedule-workflow
   schedule:
@@ -14,10 +16,13 @@ jobs:
         with:
           timezoneLinux: "Europe/Paris"
           timezoneMacos: "Europe/Paris"
-          timezoneWindows: "Europe/Paris"
-      - shell: bash
+          timezoneWindows: "Europe/Paris"    
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Test with environment variables
         env:
+          EXEC_DATE: ${{ steps.date.outputs.date }}
           SUPER_SECRET: ${{ secrets.SuperSecret }}
-          EXEC_DATE : ${{ github.event.inputs.date }}
-        run: |
-          echo $EXEC_DATE -> SuperSecret: $SUPER_SECRET
+        run: echo "$EXEC_DATE -> SuperSecret: $SUPER_SECRET"
+          
