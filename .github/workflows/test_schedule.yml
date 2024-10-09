@@ -20,4 +20,4 @@ jobs:
           SUPER_SECRET: ${{ secrets.SuperSecret }}
           EXEC_DATE : ${{ github.event.inputs.date }}
         run: |
-          echo $EXEC_DATE -> SuperSecret: $SUPER_SECRET"
+          echo $EXEC_DATE -> SuperSecret: $SUPER_SECRET
