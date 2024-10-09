@@ -1,15 +1,17 @@
 name: Do things every 5 minutes
 on:
   # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+  # https://github.com/marketplace/actions/schedule-workflow
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "*/1 * * * *"
 jobs:
-  stale:
+  schedule:
+    name: 📅 Schedule
     runs-on: ubuntu-latest
     steps:
       - shell: bash
         env:
           SUPER_SECRET: ${{ secrets.SuperSecret }}
+          EXEC_DATE : ${{ github.event.inputs.date }}
         run: |
-          echo "$SUPER_SECRET"
-          
+          echo $EXEC_DATE -> SuperSecret: $SUPER_SECRET"
