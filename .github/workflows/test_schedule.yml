@@ -19,10 +19,12 @@ jobs:
           timezoneWindows: "Europe/Paris"    
       - name: Get current date
         id: date
-        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date date +'%d/%m/%y %H:%M:%S')" >> $GITHUB_OUTPUT
       - name: Test with environment variables
         env:
           EXEC_DATE: ${{ steps.date.outputs.date }}
           SUPER_SECRET: ${{ secrets.SuperSecret }}
         run: echo "$EXEC_DATE -> SuperSecret=$SUPER_SECRET"
           
+# https://docs.github.com/fr/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
+# https://github.com/LeMoussel/user-agents-python/settings/secrets/actions
