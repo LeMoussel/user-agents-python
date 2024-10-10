@@ -1,0 +1,30 @@
+name: Test Schedule
+on:
+  push:
+  
+  # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
+  # https://github.com/marketplace/actions/schedule-workflow
+  schedule:
+    - cron: "02 17 * * *"
+jobs:
+  schedule:
+    name: 📅 Schedule
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/marketplace/actions/set-timezone
+      - uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Europe/Paris"
+          timezoneMacos: "Europe/Paris"
+          timezoneWindows: "Europe/Paris"    
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%d/%m/%y %H:%M:%S')" >> $GITHUB_OUTPUT
+      - name: Test with environment variables
+        env:
+          EXEC_DATE: ${{ steps.date.outputs.date }}
+          SUPER_SECRET: ${{ secrets.SuperSecret }}
+        run: echo "$EXEC_DATE -> SuperSecret=$SUPER_SECRET"
+          
+# https://docs.github.com/fr/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions
+# https://github.com/LeMoussel/user-agents-python/settings/secrets/actions
