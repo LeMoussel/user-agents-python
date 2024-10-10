@@ -1,6 +1,11 @@
+# pylint: disable=line-too-long
+
+import re
 import random
-from copy import deepcopy
 import json
+from copy import deepcopy
+from typing import Callable, List, Any, Union, Dict
+
 
 # Inspired from Intoli user-agents : https://github.com/intoli/user-agents/blob/main/src/user-agent.ts
 
@@ -29,31 +34,57 @@ default_cumulative_weight_index_pairs = make_cumulative_weight_index_pairs(
 )
 
 
-# Turn the various filter formats into a single filter function that acts on raw user agents.
-def construct_filter(filters, accessor=lambda x: x):
+UserAgentData = Dict[str, Any]  # Replace with your actual user agent data structure.
+NestedValueOf = Any  # A type alias to represent nested values within UserAgentData.
+
+# Define the type for filters.
+Filter = Union[
+    Callable[[UserAgentData], bool], str, re.Pattern, List[Any], Dict[str, Any]
+]
+
+
+# Construct a filter function that acts on raw user agents.
+def construct_filter(
+    filters: Filter,
+    accessor: Callable[
+        [UserAgentData], Union[UserAgentData, NestedValueOf]
+    ] = lambda x: x,
+) -> Callable[[UserAgentData], bool]:
+    child_filters: List[Callable[[UserAgentData], bool]] = []
+
     if callable(filters):
         child_filters = [filters]
-    elif isinstance(filters, str):
+    elif isinstance(filters, re.Pattern):
         child_filters = [
-            lambda value: filters == value.get("userAgent", "")
-            if isinstance(value, dict)
-            else filters == value
+            lambda value: (
+                isinstance(value, dict)
+                and "userAgent" in value
+                and value["userAgent"]
+                and filters.search(value["userAgent"])
+            )
+            or (isinstance(value, str) and filters.search(value))
         ]
     elif isinstance(filters, list):
         child_filters = [construct_filter(f) for f in filters]
     elif isinstance(filters, dict):
         child_filters = [
-            construct_filter(value_filter, accessor=lambda obj, key=key: obj.get(key))
+            construct_filter(
+                value_filter, accessor=lambda parent_obj, key=key: parent_obj.get(key)
+            )
             for key, value_filter in filters.items()
         ]
     else:
         child_filters = [
-            lambda value: filters == value.get("userAgent", "")
-            if isinstance(value, dict)
-            else filters == value
+            lambda value: (
+                isinstance(value, dict)
+                and "userAgent" in value
+                and value["userAgent"]
+                and filters == value["userAgent"]
+            )
+            or (filters == value)
         ]
 
-    def filter_fn(parent_object):
+    def filter_fn(parent_object: UserAgentData) -> bool:
         try:
             value = accessor(parent_object)
             return all(child_filter(value) for child_filter in child_filters)
