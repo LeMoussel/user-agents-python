@@ -16,3 +16,6 @@ class TestUserAgent(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+    # TODO rename user-agents-python to py3-user-agents
+    # TODO download update_data
