@@ -1,6 +1,3 @@
-# TODO rename user-agents-python to py3-user-agents
-# TODO download update_data
-
 # pylint: disable=missing-docstring
 
 import re
@@ -16,30 +13,29 @@ class TestUserAgent(unittest.TestCase):
         self.assertGreater(len(user_agent), 0)
 
     def test_support_object_properties(self):
-        user_agent = UserAgent({"deviceCategory": "tablet"})
         for _ in range_iterations:
-            self.assertEqual(user_agent().data["deviceCategory"], "tablet")
+            user_agent = UserAgent({"deviceCategory": "tablet"})
+            self.assertEqual(user_agent.data["deviceCategory"], "tablet")
 
     def test_support_nested_object_properties(self):
-        user_agent = UserAgent({"connection": {"effectiveType": "4g"}})
         for _ in range_iterations:
-            self.assertEqual(user_agent().data["connection"]["effectiveType"], "4g")
+            user_agent = UserAgent({"connection": {"effectiveType": "4g"}})
+            self.assertEqual(user_agent.data["connection"]["effectiveType"], "4g")
 
     def test_support_multiple_object_properties(self):
-        user_agent = UserAgent({"deviceCategory": "mobile", "pluginsLength": 0})
         for _ in range_iterations:
-            random_user_agent = user_agent()
-            self.assertEqual(random_user_agent.data["deviceCategory"], "mobile")
-            self.assertEqual(random_user_agent.data["pluginsLength"], 0)
+            user_agent = UserAgent({"deviceCategory": "mobile", "pluginsLength": 0})
+            self.assertEqual(user_agent.data["deviceCategory"], "mobile")
+            self.assertEqual(user_agent.data["pluginsLength"], 0)
 
     def test_support_top_level_regular_expressions(self):
-        user_agent = UserAgent(re.compile("Safari"))
         for _ in range_iterations:
+            user_agent = UserAgent(re.compile("Safari"))
             self.assertRegex(user_agent.data["userAgent"], "Safari")
 
     def test_support_object_property_regular_expressions(self):
-        user_agent = UserAgent({"userAgent": re.compile("Safari")})
         for _ in range_iterations:
+            user_agent = UserAgent({"userAgent": re.compile("Safari")})
             self.assertRegex(user_agent.data["userAgent"], "Safari")
 
     def test_support_top_level_arrays(self):
@@ -50,10 +46,10 @@ class TestUserAgent(unittest.TestCase):
             self.assertRegex(random_user_agent.data["userAgent"], "Linux")
 
     def test_support_object_property_arrays(self):
-        user_agent = UserAgent(
-            {"deviceCategory": [re.compile(r"(tablet|mobile)"), "mobile"]}
-        )
         for _ in range_iterations:
+            user_agent = UserAgent(
+                {"deviceCategory": [re.compile(r"(tablet|mobile)"), "mobile"]}
+            )
             self.assertEqual(user_agent.data["deviceCategory"], "mobile")
 
     def test_constructor_throws_error_when_no_filters_match(self):
@@ -72,8 +68,8 @@ class TestUserAgent(unittest.TestCase):
         self.assertRegex(user_agent.data["userAgent"], "Chrome")
 
     def test_call_handler_produces_new_user_agents_that_pass_same_filters(self):
-        user_agent = UserAgent.random_user_agent({"userAgent": re.compile("Chrome")})
         for _ in range_iterations:
+            user_agent = UserAgent.random_user_agent({"userAgent": re.compile("Chrome")})
             self.assertRegex(user_agent.data["userAgent"], "Chrome")
 
     def test_cumulative_weight_index_pairs_length_greater_than_100(self):

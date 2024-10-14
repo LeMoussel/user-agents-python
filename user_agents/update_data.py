@@ -5,7 +5,7 @@ import gzip
 import requests
 
 
-def gunzip_data(input_filename=None):
+def _gunzip_data(input_filename=None):
     if not input_filename or not input_filename.endswith(".gz"):
         raise ValueError(
             "Filename must be specified and end with `.gz` for gunzipping."
@@ -41,7 +41,7 @@ def get_user_agent_data():
     except requests.exceptions.RequestException as err:
         print(f"Request error occurred: {err}")
 
-    gunzip_data(USER_AGENT_FILE)
+    _gunzip_data(USER_AGENT_FILE)
     os.remove(USER_AGENT_FILE)
 
 
