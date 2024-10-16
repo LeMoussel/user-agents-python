@@ -8,7 +8,6 @@ license = "BSD-2-Clause"
 readme = "README.md"
 packages = [
     {include = "user_agents"},
-    {include = "data/user-agents.json"},
 ]
 
 [tool.poetry.dependencies]

@@ -1,5 +1,6 @@
 import os
 import gzip
+import pathlib
 
 # https://requests.readthedocs.io/en/latest/
 import requests
@@ -22,7 +23,7 @@ def _gunzip_data(input_filename=None):
 
 
 def get_user_agent_data():
-    USER_AGENT_FILE = "data/user-agents.json.gz"
+    USER_AGENT_FILE = str(pathlib.Path(__file__).parent.resolve().joinpath("data/user-agents.json.gz"))
     try:
         response = requests.get(
             url="https://raw.githubusercontent.com/intoli/user-agents/master/src/user-agents.json.gz",
