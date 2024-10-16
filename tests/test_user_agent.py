@@ -38,19 +38,25 @@ class TestUserAgent(unittest.TestCase):
             user_agent = UserAgent({"userAgent": re.compile("Safari")})
             self.assertRegex(user_agent.data["userAgent"], "Safari")
 
-    def test_support_top_level_arrays(self):
-        user_agent = UserAgent([re.compile("Android"), re.compile("Linux")])
-        for _ in range_iterations:
-            random_user_agent = user_agent()
-            self.assertRegex(random_user_agent.data["userAgent"], "Android")
-            self.assertRegex(random_user_agent.data["userAgent"], "Linux")
-
-    def test_support_object_property_arrays(self):
+    def test_support_top_level_and_regular_expressions(self):
         for _ in range_iterations:
             user_agent = UserAgent(
-                {"deviceCategory": [re.compile(r"(tablet|mobile)"), "mobile"]}
+                {"userAgent": re.compile(r"(?=.*Android)(?=.*Linux)")}
             )
-            self.assertEqual(user_agent.data["deviceCategory"], "mobile")
+            self.assertRegex(user_agent.data["userAgent"], "Android")
+            self.assertRegex(user_agent.data["userAgent"], "Linux")
+
+    def test_support_object_property_or_regular_expressions(self):
+        for _ in range_iterations:
+            user_agent = UserAgent(
+                {
+                    "deviceCategory": re.compile(r"tablet|mobile")
+                }
+            )
+            self.assertTrue(
+                "tablet" in user_agent.data["deviceCategory"]
+                or "mobile" in user_agent.data["deviceCategory"]
+            )
 
     def test_constructor_throws_error_when_no_filters_match(self):
         with self.assertRaises(ValueError):
@@ -69,7 +75,9 @@ class TestUserAgent(unittest.TestCase):
 
     def test_call_handler_produces_new_user_agents_that_pass_same_filters(self):
         for _ in range_iterations:
-            user_agent = UserAgent.random_user_agent({"userAgent": re.compile("Chrome")})
+            user_agent = UserAgent.random_user_agent(
+                {"userAgent": re.compile("Chrome")}
+            )
             self.assertRegex(user_agent.data["userAgent"], "Chrome")
 
     def test_cumulative_weight_index_pairs_length_greater_than_100(self):

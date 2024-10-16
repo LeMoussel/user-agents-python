@@ -6,7 +6,6 @@
 import re
 import random
 import json
-from copy import deepcopy
 from typing import Callable, List, Any, Union, Dict
 
 
@@ -230,8 +229,7 @@ class UserAgent:
             for cumulative_weight, index in self.cumulative_weight_index_pairs
             if cumulative_weight > random_number
         )
-        raw_user_agent = user_agents[index]
-        self.data = deepcopy(raw_user_agent)
+        self.data = user_agents[index]
 
     @staticmethod
     def random_user_agent(filters=None):
