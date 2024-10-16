@@ -1,16 +1,22 @@
+# https://python-poetry.org/docs/pyproject/
 [tool.poetry]
-name = "user_agents_python"
+name = "py3_user_agents"
 version = "0.1.0"
 description = "A Python library to generate random user agents with regularly updated data."
 authors = ["LeMoussel <cnhx27@gmail.com>"]
-license = "2-Clause BSD"
+license = "BSD-2-Clause"
 readme = "README.md"
+packages = [
+    {include = "user_agents"},
+    {include = "data/user-agents.json"},
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 requests = "^2.32.3"
-
+ua-parser = "^0.18.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+

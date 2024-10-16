@@ -43,7 +43,3 @@ def get_user_agent_data():
 
     _gunzip_data(USER_AGENT_FILE)
     os.remove(USER_AGENT_FILE)
-
-
-if __name__ == "__main__":
-    get_user_agent_data()
