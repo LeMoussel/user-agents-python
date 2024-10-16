@@ -6,12 +6,11 @@
 import re
 import random
 import json
-from pathlib import Path
+import pathlib
 from typing import Callable, List, Any, Union, Dict
 
 
 # Inspired from Intoli user-agents : https://github.com/intoli/user-agents/blob/main/src/user-agent.ts
-from user_agents.update_data import get_user_agent_data
 
 
 # Normalizes the total weight to 1 and constructs a cumulative distribution.
@@ -73,7 +72,13 @@ def construct_cumulative_weight_index_pairs_from_filters(filters):
     return make_cumulative_weight_index_pairs(weight_index_pairs)
 
 
-with open(file="data/user-agents.json", mode="r", encoding="utf-8") as f:
+with open(
+    file=str(
+        pathlib.Path(__file__).parent.resolve().joinpath("data/user-agents.json")
+    ),
+    mode="r",
+    encoding="utf-8",
+) as f:
     user_agents = json.load(f)
 
 # Precompute these so that we can quickly generate unfiltered user agents.
@@ -116,10 +121,8 @@ class UserAgent:
         return self.__str__()
 
     def random(self):
-        user_agent = UserAgent()
-        user_agent.cumulative_weight_index_pairs = self.cumulative_weight_index_pairs
-        user_agent.randomize()
-        return user_agent
+        self.randomize()
+        return self
 
     def randomize(self):
         # Find a random raw random user agent.

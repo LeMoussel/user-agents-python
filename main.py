@@ -25,12 +25,11 @@ user_agent = UserAgent({"deviceCategory": "mobile"})
 
 # Generating Multiple User Agents With The Same Filters
 user_agent = UserAgent({"platform": "Win32"})
-user_agents = [user_agent() for _ in range(1000)]
+user_agents = [user_agent() for _ in range(10000)]
 
 # Regular Expression Matching
 user_agent = UserAgent({"userAgent": re.compile("Safari")})
 print(user_agent)
-
 
 # Custom Filter Functions
 user_agent = UserAgent({"custom_filter": lambda agent: agent["screenWidth"] > 1300})
