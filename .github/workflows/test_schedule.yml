@@ -1,11 +1,11 @@
 name: Test Schedule
 on:
-  push:
+  #push:
 
   # https://docs.github.com/fr/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#schedule
   # https://github.com/marketplace/actions/schedule-workflow
-  schedule:
-    - cron: "02 17 * * *"
+  #schedule:
+    #- cron: "02 17 * * *"
 jobs:
   schedule:
     name: 📅 Schedule
